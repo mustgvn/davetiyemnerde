@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#faf8f5" />
+  <title>Nişan Davetiyesi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-cream: #faf8f5;
+      --bg-paper: #f5f2ed;
+      --bg-card: #fdfcfa;
+      --ink: #4e3a35;
+      --ink-plum: #5c4033;
+      --ink-soft: #6b5048;
+      --ink-muted: #8a7269;
+      --ink-faint: #a89890;
+      --accent: #6b4c5a;
+      --accent-soft: rgba(107, 76, 90, 0.12);
+      --line: rgba(78, 58, 53, 0.12);
+      --line-strong: rgba(78, 58, 53, 0.22);
+      --shadow-soft: 0 2px 16px rgba(78, 58, 53, 0.06);
+      --shadow-card: 0 6px 28px rgba(78, 58, 53, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-pill: 2.5rem;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-paper);
+      color: var(--ink);
+      min-height: 100dvh;
+    }
+
+    /* ========== Başlangıç ekranı – Boda Maria & Carlos tarzı ========== */
+    .start-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-paper);
+      cursor: pointer;
+      -webkit-touch-callout: none;
+      user-select: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .start-screen.hidden {
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .start-screen .seal-wrap {
+      width: 200px;
+      height: 200px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .start-screen .seal-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 20px rgba(78, 58, 53, 0.15));
+    }
+
+    .start-screen .hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.9rem, 3.2vw, 1.05rem);
+      font-weight: 500;
+      color: var(--ink-plum);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .start-screen .script-intro {
+      position: absolute;
+      bottom: 5rem;
+      left: 1.5rem;
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.25rem, 4vw, 1.5rem);
+      color: var(--ink-plum);
+      line-height: 1.3;
+    }
+
+    .start-screen .skip-link {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      text-decoration: none;
+      z-index: 12;
+      padding: 0.5rem;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .start-screen .skip-link:hover {
+      color: var(--ink-muted);
+    }
+
+    /* Ses butonu (örnek sitedeki gibi sağ alt) */
+    .sound-btn {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: var(--ink-plum);
+      color: var(--bg-cream);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 11;
+      transition: opacity 0.3s, transform 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .sound-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .sound-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .sound-btn.muted .icon-on {
+      display: none;
+    }
+
+    .sound-btn.muted .icon-off {
+      display: block;
+    }
+
+    .sound-btn .icon-off {
+      display: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
+    }
+
+    /* ========== Video intro (3 sn, animasyonla kaybolur) ========== */
+    .video-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity 0.9s ease;
+    }
+
+    .video-intro.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .video-intro video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Boda tarzı section: section-padding bg-ivory relative overflow-hidden (El lugar gibi) */
+    .section-padding {
+      padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1rem, 4vw, 2rem);
+      padding-bottom: clamp(2rem, 5vw, 3rem);
+    }
+
+    .bg-ivory {
+      background-color: var(--bg-paper);
+    }
+
+    .section-padding.bg-ivory.overflow-hidden {
+      position: relative;
+      overflow: hidden;
+      min-height: 100dvh;
+    }
+
+    /* Çiçek bordürü – baştan ekran sonuna kadar tekrarlı (repeat-y) */
+    .floral-border {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 150px;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.4;
+      background-repeat: repeat-y;
+      background-size: auto;
+      background-image: url('floral-border-J4FzR5M8.png');
+    }
+
+    .floral-border-left {
+      left: 0;
+      background-position: left top;
+      transform: scaleX(-1);
+    }
+
+    .floral-border-right {
+      right: 0;
+      background-position: right top;
+    }
+
+    /* ========== Davetiye içeriği – Boda tarzı kemerli panel ========== */
+    .invitation {
+      min-height: 100dvh;
+      padding: 0;
+      background: transparent;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .invitation.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .invitation-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      background: var(--bg-card);
+      border-radius: var(--radius-pill);
+      padding: clamp(2rem, 6vw, 2.75rem);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--line);
+    }
+
+    /* Header – çerçeve ve tipografi detayı */
+    .header {
+      text-align: center;
+      margin-bottom: 2.25rem;
+      padding: 0 0.5rem;
+    }
+
+    .header .label-wrap {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .header .label {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.4rem, 4.5vw, 1.75rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--ink-plum);
+    }
+
+    .names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.75rem, 6vw, 2.25rem);
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--ink-plum);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .names span {
+      display: block;
+    }
+
+    .names .amp {
+      font-weight: 500;
+      font-size: 0.85em;
+      color: var(--ink-muted);
+      margin: 0.15em 0;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 1.5rem auto 1.75rem;
+      max-width: 120px;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+    }
+
+    .divider-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--ink-plum);
+      opacity: 0.6;
+    }
+
+    /* Yüzük illüstrasyonu – modern: arka plansız, büyük görsel */
+    .rings-motif {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rings-motif img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(78, 58, 53, 0.12));
+    }
+
+    .header-tagline {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.85rem, 5.5vw, 2.35rem);
+      font-weight: 400;
+      color: var(--ink-plum);
+      margin-top: 0.25rem;
+      margin-bottom: 0;
+    }
+
+    /* Nişanlandık bölümünde yüzük – modern, büyük */
+    .nisanlandik-section .rings-motif {
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 1rem;
+    }
+
+    .intro-text {
+      font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .section {
+      margin-bottom: 2.25rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-content {
+      font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .section-content strong {
+      font-weight: 500;
+    }
+
+    .add-to-calendar {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      border-radius: var(--radius-sm);
+      background: var(--accent-soft);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .add-to-calendar:hover {
+      color: var(--ink);
+      background: rgba(107, 76, 90, 0.2);
+    }
+
+    .add-to-calendar svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* Footer – Boda: Confirma asistencia + not */
+    .footer {
+      margin-top: 2.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .footer-note {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-note::before {
+      content: '◆';
+      display: block;
+      font-size: 0.5rem;
+      color: var(--ink-plum);
+      opacity: 0.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-credit {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    .footer-credit a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .footer-credit a:hover {
+      color: var(--accent);
+    }
+
+    .footer-credit .linkedin-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .footer-credit .linkedin-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
+
+    /* Tarih bloğu – Boda tarzı (dikey çizgilerle) */
+    .date-block {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .date-block .date-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.95rem, 3.2vw, 1.1rem);
+      font-weight: 600;
+      color: var(--ink-plum);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .date-block .date-line span.bar {
+      color: var(--line-strong);
+      font-weight: 400;
+      user-select: none;
+    }
+
+    .date-block .year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 4vw, 1.35rem);
+      font-weight: 600;
+      color: var(--ink-plum);
+      margin-top: 0.35rem;
+    }
+
+    .date-block .event-time {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+      margin-top: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* Çift bloğu – vurgulu kart */
+    .couples-block {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0.6rem 1.25rem;
+      align-items: center;
+      justify-items: center;
+      max-width: 340px;
+      margin: 0 auto 1.75rem;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: linear-gradient(135deg, var(--bg-card) 0%, #f8f6f2 100%);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .couples-block .name-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 3.8vw, 1.2rem);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.06em;
+    }
+
+    .couples-block .role {
+      font-size: 0.7rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.35rem;
+    }
+
+    .couples-block .amp {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--ink-plum);
+      opacity: 0.9;
+    }
+
+    /* Aile kartları – detaylı */
+    .families-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      max-width: 360px;
+      margin: 0 auto 2rem;
+    }
+
+    .family-card {
+      padding: 1.1rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      position: relative;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .family-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--ink-plum), transparent);
+      opacity: 0.4;
+      border-radius: 1px;
+    }
+
+    .family-card .role {
+      font-size: 0.68rem;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 0.4rem;
+    }
+
+    .family-card .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* Slogan – öne çıkan alan */
+    .tagline {
+      position: relative;
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 2rem 1.75rem;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .tagline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-soft));
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+    }
+
+    .tagline .line1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.65rem, 5vw, 2rem);
+      font-weight: 400;
+      color: var(--ink-plum);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+    }
+
+    .tagline .line-sep {
+      width: 24px;
+      height: 1px;
+      background: var(--line-strong);
+      margin: 0 auto 0.85rem;
+      opacity: 0.8;
+    }
+
+    .tagline .line2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.8vw, 1.1rem);
+      color: var(--ink-muted);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      line-height: 1.45;
+    }
+
+    /* Mekan bölümü – kart ortada, içerik full ortada, harita büyük */
+    .venue-section {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+      padding: 1.5rem 1.25rem;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .venue-section .section-title {
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .venue-section .section-desc {
+      text-align: center;
+    }
+
+    .venue-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .venue-detail {
+      font-size: 0.9rem;
+      color: var(--ink-muted);
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .map-wrap {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      margin-top: 1.25rem;
+      margin-left: auto;
+      margin-right: auto;
+      aspect-ratio: 16/10;
+      max-height: 380px;
+      min-height: 240px;
+      width: 100%;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .map-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .venue-section .map-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .map-link:hover {
+      color: var(--ink);
+    }
+
+    .map-link svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* Geri sayım – detaylı kutular */
+    .countdown-section {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .countdown-section.hidden {
+      display: none;
+    }
+
+    .countdown-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.9rem, 3.2vw, 1.05rem);
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      max-width: 288px;
+      margin: 0 auto;
+    }
+
+    .countdown-box {
+      padding: 1rem 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .countdown-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 5vw, 1.85rem);
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+      display: block;
+      letter-spacing: 0.02em;
+    }
+
+    .countdown-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+      margin-top: 0.35rem;
+    }
+
+    /* Gün geçtikten sonra: Nişanlandık – vurgulu */
+    .nisanlandik-section {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1.75rem 1.25rem;
+      display: none;
+      background: linear-gradient(180deg, var(--accent-soft) 0%, var(--bg-card) 100%);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nisanlandik-section.visible {
+      display: block;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nisanlandik-section .heart-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 1rem;
+    }
+
+    .nisanlandik-section .heart-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: var(--ink-plum);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nisanlandik-section .main-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.55rem, 6vw, 2.1rem);
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.4rem;
+    }
+
+    .nisanlandik-section .date-text {
+      font-size: 0.95rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Başlangıç ekranı – Boda Maria & Carlos tarzı -->
+  <div class="start-screen" id="startScreen" role="button" tabindex="0" aria-label="Davetiyeyi açmak için dokunun">
+    <div class="seal-wrap" aria-hidden="true">
+      <img src="rings-illustration-tO3OeALU.png" alt="" width="200" height="200" />
+    </div>
+    <p class="hint">Davetiyeyi açmak için dokunun</p>
+    <p class="script-intro">Bu davetiye sizin için hazırlandı</p>
+    <a href="#" class="skip-link" id="skipLink" aria-label="Atla">ATLA</a>
+  </div>
+
+  <!-- Ses butonu (müziği kapatmak için – WhatsApp / iletişim hattı gibi sağ alt) -->
+  <button type="button" class="sound-btn" id="soundBtn" aria-label="Müziği aç/kapat" style="display: none;">
+    <svg class="icon-on" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" />
+    </svg>
+    <svg class="icon-off" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
+      <path d="M11 5L6 9H2v6h4l5 4V5z" />
+      <line x1="23" y1="9" x2="17" y2="15" />
+      <line x1="17" y1="9" x2="23" y2="15" />
+    </svg>
+  </button>
+
+  <!-- Açılış müziği (tıklayınca başlar, ses butonu ile kapatılır) -->
+  <audio id="introAudio" preload="auto" loop>
+    <source src="intro-music-CzqJOUtA.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- 3 sn intro video (açılışta oynar) -->
+  <div class="video-intro" id="videoIntro" aria-hidden="true">
+    <video id="introVideo" playsinline muted autoplay>
+      <source src="intro-video-BpkZMtTn.mov" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- Davetiye bilgileri – Boda Maria & Carlos düzeni (section-padding bg-ivory gibi) -->
+  <main class="invitation" id="invitation">
+    <section class="section-padding bg-ivory relative overflow-hidden" aria-label="Davetiye içeriği">
+      <div class="floral-border floral-border-left" aria-hidden="true"></div>
+      <div class="floral-border floral-border-right" aria-hidden="true"></div>
+      <div class="invitation-inner">
+      <header class="header">
+        <p class="label-wrap"><span class="label">Nişan Davetiyesi</span></p>
+        <h1 class="names">
+          <span>Derya</span>
+          <span class="amp">&</span>
+          <span>Mustafa</span>
+        </h1>
+        <div class="divider" aria-hidden="true">
+          <span class="divider-line"></span>
+          <span class="divider-dot"></span>
+          <span class="divider-line"></span>
+        </div>
+        <div class="rings-motif" aria-hidden="true">
+          <img src="rings-illustration-tO3OeALU.png" alt="" width="200" height="200" loading="eager" />
+        </div>
+        <p class="header-tagline">Nişanlanıyoruz!</p>
+      </header>
+
+      <!-- Tarih – Boda’da hemen isimlerden sonra -->
+      <div class="date-block">
+        <p class="date-line">
+          <span>Nisan</span><span class="bar">|</span><span>19</span><span class="bar">|</span><span>Pazar</span>
+        </p>
+        <p class="year">2026</p>
+        <p class="event-time">Nişan — 19:00 – 23:00</p>
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20260419T160000Z%2F20260419T200000Z&text=Ni%C5%9Fan+-+Mustafa+%26+Derya&location=Ever+After+WorldPoint+Kongre+ve+Etkinlik+Merkezi%2C+B%C3%BCy%C3%BCk%C3%A7ekmece%2C+%C4%B0stanbul" target="_blank" rel="noopener noreferrer" class="add-to-calendar" aria-label="Takvime ekle">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" /><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01" /></svg>
+          Takvime ekle
+        </a>
+      </div>
+
+      <!-- Nişan gününe kalan süre (Cuenta atrás) -->
+      <section class="countdown-section" id="countdownSection">
+        <p class="countdown-heading">Nişan gününe kalan süre</p>
+        <div class="countdown-grid">
+          <div class="countdown-box">
+            <span class="countdown-value" id="countdownDays">0</span>
+            <span class="countdown-label">Gün</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="countdownHours">0</span>
+            <span class="countdown-label">Saat</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="countdownMins">0</span>
+            <span class="countdown-label">Dakika</span>
+          </div>
+          <div class="countdown-box">
+            <span class="countdown-value" id="countdownSecs">0</span>
+            <span class="countdown-label">Saniye</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gün geçtikten sonra: Nişanlandık -->
+      <section class="nisanlandik-section" id="nisanlandikSection">
+        <div class="rings-motif" aria-hidden="true">
+          <img src="rings-illustration-tO3OeALU.png" alt="" width="160" height="160" loading="lazy" />
+        </div>
+        <p class="main-text">Nişanlandık</p>
+        <p class="date-text">19 Nisan 2026</p>
+      </section>
+
+      <div class="couples-block">
+        <div>
+          <p class="role">Damat</p>
+          <p class="name-main">Mustafa Güven</p>
+        </div>
+        <span class="amp">&</span>
+        <div>
+          <p class="role">Gelin</p>
+          <p class="name-main">Derya<br />Köse</p>
+        </div>
+      </div>
+
+      <div class="families-block">
+        <div class="family-card">
+          <p class="role">Damat Baba</p>
+          <p class="name">Murat Güven</p>
+        </div>
+        <div class="family-card">
+          <p class="role">Gelin Baba</p>
+          <p class="name">Battal Köse</p>
+        </div>
+        <div class="family-card">
+          <p class="role">Damat Anne</p>
+          <p class="name">Emel Güven</p>
+        </div>
+        <div class="family-card">
+          <p class="role">Gelin Anne</p>
+          <p class="name">Songül Köse</p>
+        </div>
+      </div>
+
+      <div class="tagline">
+        <p class="line1">Bir ömre ilk adım</p>
+        <div class="line-sep" aria-hidden="true"></div>
+        <p class="line2">Mutluluğumuza ortak olmanız dileğiyle…</p>
+      </div>
+
+      <section class="section venue-section">
+        <h2 class="section-title">Yer</h2>
+        <p class="section-desc">Mekan ve adres</p>
+        <p class="venue-name">Ever After By WorldPoint Kongre ve Etkinlik Merkezi (2. kat) Mini Balo Salonu</p>
+        <p class="venue-detail">
+          Pınartepe Mah. Akyurt Cad. No:1/c No:3<br />
+          Büyükçekmece / İstanbul
+        </p>
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps?q=Ever+After+WorldPoint+Kongre+ve+Etkinlik+Merkezi+Pinartepe+Mah.+Akyurt+Cad.+1+c+3+Buyukcekmece+Istanbul&output=embed"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mekan konumu - Google Haritalar"
+          ></iframe>
+        </div>
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=Ever+After+WorldPoint+Kongre+ve+Etkinlik+Merkezi+Pinartepe+Mah.+Akyurt+Cad.+1+c+3+Buyukcekmece+Istanbul"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="map-link"
+        >
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+          Haritada aç
+        </a>
+      </section>
+
+      <footer class="footer">
+        <p class="footer-note">— Kalbinizle gelin —</p>
+        <p class="footer-credit">
+          <a href="https://www.linkedin.com/in/mustafa-g%C3%BCven-a62b1b148/" target="_blank" rel="noopener noreferrer" aria-label="Mustafa Güven LinkedIn">
+            <span class="linkedin-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </span>
+            Mustafa Güven
+          </a>
+          tasarladı
+        </p>
+      </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var startScreen = document.getElementById('startScreen');
+      var videoIntro = document.getElementById('videoIntro');
+      var introVideo = document.getElementById('introVideo');
+      var introAudio = document.getElementById('introAudio');
+      var invitation = document.getElementById('invitation');
+      var soundBtn = document.getElementById('soundBtn');
+      var countdownSection = document.getElementById('countdownSection');
+      var nisanlandikSection = document.getElementById('nisanlandikSection');
+      var countdownDays = document.getElementById('countdownDays');
+      var countdownHours = document.getElementById('countdownHours');
+      var countdownMins = document.getElementById('countdownMins');
+      var countdownSecs = document.getElementById('countdownSecs');
+
+      var INTRO_DURATION_MS = 3000;
+      // Nişan: 19 Nisan 2026 19:00 (yerel saat)
+      var ENGAGEMENT_DATE = new Date(2026, 3, 19, 19, 0, 0);
+      // Gün bittikten sonra "Nişanlandık" göster: 20 Nisan 2026 00:00
+      var DAY_AFTER = new Date(2026, 3, 20, 0, 0, 0);
+
+      function isPastEngagementDay() {
+        return Date.now() >= DAY_AFTER.getTime();
+      }
+
+      function updateCountdown() {
+        var now = Date.now();
+        var end = ENGAGEMENT_DATE.getTime();
+        if (now >= end) {
+          var diff = Math.max(0, DAY_AFTER.getTime() - now);
+          if (diff <= 0) {
+            switchToNisanlandik();
+            return;
+          }
+        } else {
+          var diff = Math.max(0, end - now);
+        }
+        var sec = Math.floor((diff / 1000) % 60);
+        var min = Math.floor((diff / 60000) % 60);
+        var hour = Math.floor((diff / 3600000) % 24);
+        var day = Math.floor(diff / 86400000);
+        countdownDays.textContent = day;
+        countdownHours.textContent = String(hour).padStart(2, '0');
+        countdownMins.textContent = String(min).padStart(2, '0');
+        countdownSecs.textContent = String(sec).padStart(2, '0');
+      }
+
+      function switchToNisanlandik() {
+        countdownSection.classList.add('hidden');
+        nisanlandikSection.classList.add('visible');
+        if (window.countdownTimer) clearInterval(window.countdownTimer);
+      }
+
+      function initCountdown() {
+        if (isPastEngagementDay()) {
+          switchToNisanlandik();
+          return;
+        }
+        countdownSection.classList.remove('hidden');
+        nisanlandikSection.classList.remove('visible');
+        updateCountdown();
+        window.countdownTimer = setInterval(function () {
+          if (isPastEngagementDay()) {
+            switchToNisanlandik();
+            return;
+          }
+          updateCountdown();
+        }, 1000);
+      }
+
+      function onStart() {
+        startScreen.classList.add('hidden');
+        videoIntro.classList.remove('fade-out');
+        introVideo.currentTime = 0;
+        introVideo.muted = true;
+        introVideo.play().catch(function () {});
+        invitation.classList.remove('visible');
+        soundBtn.style.display = 'flex';
+        introAudio.currentTime = 0;
+        introAudio.muted = false;
+        introAudio.play().catch(function () {});
+        soundBtn.classList.remove('muted');
+
+        setTimeout(function () {
+          videoIntro.classList.add('fade-out');
+          setTimeout(function () {
+            invitation.classList.add('visible');
+            initCountdown();
+          }, 400);
+        }, INTRO_DURATION_MS);
+      }
+
+      soundBtn.addEventListener('click', function () {
+        introAudio.muted = !introAudio.muted;
+        soundBtn.classList.toggle('muted', introAudio.muted);
+        soundBtn.setAttribute('aria-label', introAudio.muted ? 'Müziği aç' : 'Müziği kapat');
+      });
+
+      function handleStart(e) {
+        if (e.type === 'click' || (e.type === 'keydown' && (e.key === 'Enter' || e.key === ' '))) {
+          e.preventDefault();
+          onStart();
+        }
+      }
+
+      startScreen.addEventListener('click', handleStart);
+      startScreen.addEventListener('keydown', handleStart);
+
+      var skipLink = document.getElementById('skipLink');
+      if (skipLink) {
+        skipLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          onStart();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
