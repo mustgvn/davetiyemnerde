@@ -72,7 +72,6 @@
     introVideo.muted = true;
     introVideo.play().catch(function () {});
     invitation.classList.remove('visible');
-    soundBtn.style.display = 'flex';
     introAudio.currentTime = 0;
     introAudio.muted = false;
     introAudio.play().catch(function () {});

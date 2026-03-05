@@ -118,11 +118,11 @@ body {
   color: var(--ink-muted);
 }
 
-/* Ses butonu (örnek sitedeki gibi sağ alt) */
+/* Ses butonu – her zaman ekranda sabit (sağ alt) */
 .sound-btn {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
+  position: fixed;
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  right: max(1.5rem, env(safe-area-inset-right));
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -133,7 +133,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 11;
+  z-index: 100;
   transition: opacity 0.3s, transform 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
