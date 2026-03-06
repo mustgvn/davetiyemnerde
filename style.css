@@ -73,16 +73,17 @@ body {
 }
 
 .start-screen .seal-wrap {
-  width: 200px;
-  height: 200px;
+  width: 500px;
+  height: 500px;
   margin-bottom: 1.5rem;
+  margin-top: -8vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .start-screen .seal-wrap img {
-  width: 100%;
+  width: 500px;
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 6px 20px rgba(78, 58, 53, 0.15));
@@ -96,6 +97,7 @@ body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   animation: pulse 2s ease-in-out infinite;
+  margin-top: -2.5rem;
 }
 
 .start-screen .script-intro {
@@ -203,7 +205,7 @@ body {
   width: 150px;
   pointer-events: none;
   z-index: 10;
-  opacity: 0.45;
+  opacity: 1;
   background-repeat: repeat-y;
   background-size: auto;
   background-image: url('img/floral-border-J4FzR5M8.png');
