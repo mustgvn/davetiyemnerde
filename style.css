@@ -1081,11 +1081,43 @@ body {
     gap: 0.5rem 1rem;
   }
 
+  /* Mobilde aile tek kart – iki taraf aynı kutuda */
   .families-block {
-    grid-template-columns: 1fr;
+    position: relative;
+    grid-template-columns: 1fr 1fr;
     max-width: 100%;
-    gap: 1rem;
-    padding: 0 0.25rem;
+    gap: 0;
+    padding: 0;
+    border-radius: var(--card-radius);
+    border: var(--card-border);
+    box-shadow: var(--card-shadow);
+    background: var(--card-bg);
+    overflow: hidden;
+  }
+
+  .families-block::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 4px;
+    background: var(--card-accent);
+  }
+
+  .families-block .family-side-card {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .families-block .family-side-card::before {
+    display: none;
+  }
+
+  .families-block .family-side-card:first-child {
+    border-right: 1px solid var(--line);
   }
 
   .venue-section {
@@ -1129,6 +1161,49 @@ body {
   }
 }
 
+/* ~450–520px: Gelin/Damat tek satırda kalır, blok alta geçer */
+@media (max-width: 520px) {
+  .couples-block {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    max-width: 280px;
+    gap: 0.5rem;
+  }
+
+  .couples-block .amp {
+    order: -1;
+    margin: 0;
+  }
+
+  .couples-block .role {
+    white-space: nowrap;
+  }
+}
+
+/* 450px altı: çift kartı taşma ve bozulma olmasın */
+@media (max-width: 450px) {
+  .couples-block {
+    max-width: 100%;
+    width: 100%;
+    padding: 1.25rem 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .couples-block .name-main {
+    font-size: clamp(0.9rem, 4.2vw, 1.05rem);
+    white-space: nowrap;
+  }
+
+  .couples-block .role {
+    font-size: 0.65rem;
+  }
+
+  .couples-block .amp {
+    font-size: 1.15rem;
+  }
+}
+
 @media (max-width: 480px) {
   .start-screen .seal-wrap {
     width: min(260px, 78vw);
@@ -1154,17 +1229,6 @@ body {
   .countdown-grid {
     grid-template-columns: repeat(2, 1fr);
     max-width: 260px;
-  }
-
-  .couples-block {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 0.5rem;
-  }
-
-  .couples-block .amp {
-    order: -1;
-    margin: 0;
   }
 
   .sound-btn {

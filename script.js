@@ -25,6 +25,21 @@
   } else {
     setTimeout(preloadIntroVideo, 500);
   }
+
+  /* Harita sayfa açıldığında arka planda yüklensin; aşağı kaydırınca donma olmasın */
+  function loadMapIframe() {
+    var iframe = document.getElementById('venueMapIframe');
+    if (iframe && iframe.getAttribute('data-src')) {
+      iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      iframe.removeAttribute('data-src');
+    }
+  }
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(loadMapIframe, { timeout: 1500 });
+  } else {
+    setTimeout(loadMapIframe, 400);
+  }
+
   var ENGAGEMENT_DATE = new Date(2026, 3, 19, 19, 0, 0);
   var DAY_AFTER = new Date(2026, 3, 20, 0, 0, 0);
 
