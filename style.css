@@ -1075,12 +1075,6 @@ body {
     font-size: clamp(1.25rem, 5vw, 1.5rem);
   }
 
-  .couples-block {
-    max-width: 100%;
-    padding: 1.5rem 1rem;
-    gap: 0.5rem 1rem;
-  }
-
   /* Mobilde aile tek kart – iki taraf aynı kutuda */
   .families-block {
     position: relative;
@@ -1158,49 +1152,6 @@ body {
 
   .footer-note {
     font-size: 0.85rem;
-  }
-}
-
-/* ~450–520px: Gelin/Damat tek satırda kalır, blok alta geçer */
-@media (max-width: 520px) {
-  .couples-block {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    max-width: 280px;
-    gap: 0.5rem;
-  }
-
-  .couples-block .amp {
-    order: -1;
-    margin: 0;
-  }
-
-  .couples-block .role {
-    white-space: nowrap;
-  }
-}
-
-/* 450px altı: çift kartı taşma ve bozulma olmasın */
-@media (max-width: 450px) {
-  .couples-block {
-    max-width: 100%;
-    width: 100%;
-    padding: 1.25rem 1rem;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .couples-block .name-main {
-    font-size: clamp(0.9rem, 4.2vw, 1.05rem);
-    white-space: nowrap;
-  }
-
-  .couples-block .role {
-    font-size: 0.65rem;
-  }
-
-  .couples-block .amp {
-    font-size: 1.15rem;
   }
 }
 
