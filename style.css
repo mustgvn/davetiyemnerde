@@ -396,28 +396,50 @@ body {
 .add-to-calendar {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.6rem;
   margin-top: 1rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.88rem;
-  color: var(--ink-soft);
+  padding: 0.75rem 1.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--bg-cream);
   text-decoration: none;
   letter-spacing: 0.06em;
-  border-radius: var(--radius-sm);
-  background: var(--accent-soft);
-  transition: color 0.2s, background 0.2s;
+  border-radius: var(--card-radius);
+  background: var(--accent);
+  border: 1px solid rgba(107, 76, 90, 0.4);
+  box-shadow: var(--card-shadow);
+  transition: color 0.25s ease, background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .add-to-calendar:hover {
-  color: var(--ink);
-  background: rgba(107, 76, 90, 0.2);
+  background: var(--ink-plum);
+  color: var(--bg-cream);
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.add-to-calendar:active {
+  transform: translateY(0);
+  box-shadow: var(--card-shadow);
+}
+
+.add-to-calendar:focus-visible {
+  outline: 2px solid var(--ink-plum);
+  outline-offset: 3px;
 }
 
 .add-to-calendar svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   stroke: currentColor;
   fill: none;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.add-to-calendar:hover svg {
+  transform: scale(1.08);
 }
 
 /* Footer – Boda: Confirma asistencia + not */
@@ -815,7 +837,7 @@ body {
   gap: 0.6rem;
   margin-top: 1.25rem;
   padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--bg-cream);
   background: var(--accent);
@@ -824,14 +846,24 @@ body {
   border-radius: var(--card-radius);
   border: 1px solid rgba(107, 76, 90, 0.4);
   box-shadow: var(--card-shadow);
-  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .venue-section .map-link:hover {
   background: var(--ink-plum);
   color: var(--bg-cream);
+  transform: translateY(-2px);
   box-shadow: var(--card-shadow-hover);
-  transform: translateY(-1px);
+}
+
+.venue-section .map-link:active {
+  transform: translateY(0);
+  box-shadow: var(--card-shadow);
+}
+
+.venue-section .map-link:focus-visible {
+  outline: 2px solid var(--ink-plum);
+  outline-offset: 3px;
 }
 
 .map-link svg {
@@ -840,6 +872,11 @@ body {
   stroke: currentColor;
   fill: none;
   flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.venue-section .map-link:hover svg {
+  transform: scale(1.08);
 }
 
 /* Geri sayım – detaylı kutular */
@@ -963,4 +1000,177 @@ body {
   color: var(--ink-muted);
   font-weight: 400;
   letter-spacing: 0.04em;
+}
+
+/* ========== Mobil / tablet uyumluluk ========== */
+@media (max-width: 768px) {
+  .start-screen .seal-wrap {
+    width: min(320px, 85vw);
+    height: min(320px, 85vw);
+    margin-top: -4vh;
+    margin-bottom: 1rem;
+  }
+
+  .start-screen .seal-wrap img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .start-screen .hint {
+    font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+    letter-spacing: 0.12em;
+    margin-top: -1.5rem;
+  }
+
+  .start-screen .script-intro {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+  }
+
+  .invitation-inner {
+    padding: clamp(1.25rem, 4vw, 2rem);
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0;
+  }
+
+  .header {
+    margin-bottom: 1.75rem;
+  }
+
+  .rings-motif {
+    width: 220px;
+    height: 160px;
+  }
+
+  .date-block {
+    padding: 1.25rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .add-to-calendar {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 48px;
+    padding: 0.85rem 1.25rem;
+  }
+
+  .couple-portrait {
+    margin: 1.5rem auto 1.75rem;
+    max-width: min(280px, 90vw);
+  }
+
+  .countdown-grid {
+    gap: 0.5rem;
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .countdown-box {
+    padding: 1rem 0.5rem;
+  }
+
+  .countdown-value {
+    font-size: clamp(1.25rem, 5vw, 1.5rem);
+  }
+
+  .couples-block {
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+    gap: 0.5rem 1rem;
+  }
+
+  .families-block {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+    gap: 1rem;
+    padding: 0 0.25rem;
+  }
+
+  .venue-section {
+    padding: 1.25rem 1rem;
+  }
+
+  .venue-name {
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .venue-detail {
+    font-size: 0.85rem;
+  }
+
+  .map-wrap {
+    min-height: 200px;
+    margin-top: 1rem;
+  }
+
+  .venue-section .map-link {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 48px;
+    padding: 0.85rem 1.25rem;
+  }
+
+  .tagline {
+    padding: 1.5rem 1rem;
+  }
+
+  .footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .footer-note {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .start-screen .seal-wrap {
+    width: min(260px, 78vw);
+    height: min(260px, 78vw);
+  }
+
+  .names {
+    font-size: clamp(2rem, 10vw, 2.75rem);
+  }
+
+  .header-tagline {
+    font-size: clamp(1.5rem, 6vw, 1.85rem);
+  }
+
+  .date-block .date-line {
+    gap: 0.5rem;
+  }
+
+  .date-block .date-line .date-day {
+    font-size: clamp(1.35rem, 8vw, 1.75rem);
+  }
+
+  .countdown-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 260px;
+  }
+
+  .couples-block {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0.5rem;
+  }
+
+  .couples-block .amp {
+    order: -1;
+    margin: 0;
+  }
+
+  .sound-btn {
+    width: 44px;
+    height: 44px;
+    right: 1rem;
+    top: 1rem;
+  }
 }

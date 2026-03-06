@@ -13,6 +13,18 @@
   var countdownSecs = document.getElementById('countdownSecs');
 
   var INTRO_DURATION_MS = 3000;
+
+  /* Sayfa açıldıktan sonra videoyu arka planda yükle; ilk çizim donmasın */
+  function preloadIntroVideo() {
+    if (!introVideo) return;
+    introVideo.preload = 'auto';
+    introVideo.load();
+  }
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(preloadIntroVideo, { timeout: 2000 });
+  } else {
+    setTimeout(preloadIntroVideo, 500);
+  }
   var ENGAGEMENT_DATE = new Date(2026, 3, 19, 19, 0, 0);
   var DAY_AFTER = new Date(2026, 3, 20, 0, 0, 0);
 
