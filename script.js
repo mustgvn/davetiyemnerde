@@ -102,11 +102,41 @@
   startScreen.addEventListener('click', handleStart);
   startScreen.addEventListener('keydown', handleStart);
 
-  var skipLink = document.getElementById('skipLink');
-  if (skipLink) {
-    skipLink.addEventListener('click', function (e) {
+  /* Takvime ekle – iOS / Android / masaüstü uyumlu (.ics) */
+  var addToCalendar = document.getElementById('addToCalendar');
+  if (addToCalendar) {
+    addToCalendar.addEventListener('click', function (e) {
       e.preventDefault();
-      onStart();
+      var summary = 'Nisan - Derya & Mustafa';
+      var location = 'Ever After WorldPoint Kongre ve Etkinlik Merkezi, Büyükçekmece, İstanbul';
+      var desc = 'Nisan davetiyesi';
+      var ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Nisan Davetiyesi//TR',
+        'CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',
+        'UID:nisan-derya-mustafa-2026@davetiyemnerde',
+        'DTSTAMP:20260101T120000Z',
+        'DTSTART:20260419T160000Z',
+        'DTEND:20260419T200000Z',
+        'SUMMARY:' + summary,
+        'LOCATION:' + location,
+        'DESCRIPTION:' + desc,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'Nisan_19_2026.ics';
+      a.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
     });
   }
 })();

@@ -18,7 +18,6 @@
     </div>
     <p class="hint">Davetiyeyi açmak için dokunun</p>
     <p class="script-intro">Bu davetiye sizin için hazırlandı</p>
-    <a href="#" class="skip-link" id="skipLink" aria-label="Atla">ATLA</a>
   </div>
 
   <!-- Ses butonu – her zaman ekranda sabit -->
@@ -73,11 +72,11 @@
       <!-- Tarih – Boda’da hemen isimlerden sonra -->
       <div class="date-block">
         <p class="date-line">
-          <span>Nisan</span><span class="bar">|</span><span>19</span><span class="bar">|</span><span>Pazar</span>
+          <span>Nisan</span><span class="bar">|</span><span class="date-day">19</span><span class="bar">|</span><span>Pazar</span>
         </p>
         <p class="year">2026</p>
         <p class="event-time">Nişan — 19:00 – 23:00</p>
-        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20260419T160000Z%2F20260419T200000Z&text=Ni%C5%9Fan+-+Mustafa+%26+Derya&location=Ever+After+WorldPoint+Kongre+ve+Etkinlik+Merkezi%2C+B%C3%BCy%C3%BCk%C3%A7ekmece%2C+%C4%B0stanbul" target="_blank" rel="noopener noreferrer" class="add-to-calendar" aria-label="Takvime ekle">
+        <a href="#" id="addToCalendar" class="add-to-calendar" aria-label="Takvime ekle">
           <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" /><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01" /></svg>
           Takvime ekle
         </a>
@@ -117,32 +116,38 @@
 
       <div class="couples-block">
         <div>
-          <p class="role">Damat</p>
-          <p class="name-main">Mustafa Güven</p>
+          <p class="role">Gelin</p>
+          <p class="name-main">Derya<br />Köse</p>
         </div>
         <span class="amp">&</span>
         <div>
-          <p class="role">Gelin</p>
-          <p class="name-main">Derya<br />Köse</p>
+          <p class="role">Damat</p>
+          <p class="name-main">Mustafa<br />Güven</p>
         </div>
       </div>
 
       <div class="families-block">
-        <div class="family-card">
-          <p class="role">Damat Baba</p>
-          <p class="name">Murat Güven</p>
+        <div class="family-side-card family-side-gelin">
+          <p class="family-side-title">Gelin tarafı</p>
+          <div class="family-side-row">
+            <span class="family-role">Baba</span>
+            <span class="family-name">Battal Köse</span>
+          </div>
+          <div class="family-side-row">
+            <span class="family-role">Anne</span>
+            <span class="family-name">Songül Köse</span>
+          </div>
         </div>
-        <div class="family-card">
-          <p class="role">Gelin Baba</p>
-          <p class="name">Battal Köse</p>
-        </div>
-        <div class="family-card">
-          <p class="role">Damat Anne</p>
-          <p class="name">Emel Güven</p>
-        </div>
-        <div class="family-card">
-          <p class="role">Gelin Anne</p>
-          <p class="name">Songül Köse</p>
+        <div class="family-side-card family-side-damat">
+          <p class="family-side-title">Damat tarafı</p>
+          <div class="family-side-row">
+            <span class="family-role">Baba</span>
+            <span class="family-name">Murat Güven</span>
+          </div>
+          <div class="family-side-row">
+            <span class="family-role">Anne</span>
+            <span class="family-name">Emel Güven</span>
+          </div>
         </div>
       </div>
 
@@ -160,6 +165,7 @@
           Pınartepe Mah. Akyurt Cad. No:1/c No:3<br />
           Büyükçekmece / İstanbul
         </p>
+        <p class="venue-parking">Otopark mevcut.</p>
         <div class="map-wrap">
           <iframe
             src="https://www.google.com/maps?q=Ever+After+WorldPoint+Kongre+ve+Etkinlik+Merkezi+Pinartepe+Mah.+Akyurt+Cad.+1+c+3+Buyukcekmece+Istanbul&output=embed"
